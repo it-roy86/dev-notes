@@ -1,0 +1,69 @@
+# Vue.js views 폴더 구조 정리
+
+> 작성일: 2026-04-23
+> 참고 프로젝트: meal-management-front
+
+---
+
+## 왜 폴더 구조를 바꿨나?
+
+처음에는 views 폴더에 모든 파일을 평탄하게 뒀어요.
+기능이 늘어날수록 파일이 많아지고 관리가 어려워져서
+기능별로 폴더를 나눠 정리했어요.
+
+---
+
+## 역할별 vs 기능별 비교
+
+### 역할별 구조 (❌ 채택 안 함)
+
+문제점:
+- ADMIN 폴더에 파일이 계속 쌓여서 나중에 관리가 어려워짐
+- 같은 기능인데 역할별로 폴더가 나뉠 수 있음
+
+### 기능별 구조 (✅ 채택)
+
+src/views/
+├── auth/
+│   └── LoginView.vue
+├── dashboard/
+│   └── DashboardView.vue
+├── setting/
+│   └── SettingView.vue
+├── meal/
+│   ├── MealInputView.vue
+│   └── MealView.vue
+└── (추후 추가될 기능 예시)
+    └── settlement/ (월별 정산)
+
+장점:
+- 기능마다 폴더가 분리되어 찾기 쉬움
+- 관련 파일끼리 모여있어 관리가 편함
+- 새로운 기능 추가 시 새 폴더만 만들면 됨
+
+---
+
+## router/index.js 경로 수정
+
+폴더 구조 변경 후 router 경로도 함께 수정해야 해요!
+
+변경 전: component: () => import('../views/LoginView.vue')
+변경 후: component: () => import('../views/auth/LoginView.vue')
+
+---
+
+## IntelliJ에서 파일 이동하는 방법
+
+파일을 드래그해서 폴더로 옮기면
+"리팩터링" 팝업이 자동으로 뜨고
+"리팩터링" 클릭하면 import 경로도 자동으로 수정해줘요!
+
+단, router/index.js는 자동 수정이 안 될 수 있으므로
+파일 이동 후 직접 경로를 확인하고 수정해주세요.
+
+---
+
+## 핵심 정리
+
+처음부터 기능별로 폴더를 나눠두는 게 좋아요.
+나중에 구조를 바꾸면 경로 수정이 많아져서 번거로워요!
